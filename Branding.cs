@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Windows.Forms;
 namespace Overclock {
  static class Branding {
-  public const string Name="BenchMark X",Version="1.6.1";
+  public const string Name="BenchMark X",Version="1.7.0";
   public static readonly Bitmap Logo=ReadImage("BenchMarkX.Logo"),Symbol=ReadImage("BenchMarkX.Symbol");
   public static readonly Icon Icon=ReadIcon();public static readonly Rectangle LogoBounds=Content(Logo);
   static Bitmap ReadImage(string name){using(var stream=Assembly.GetExecutingAssembly().GetManifestResourceStream(name))using(var image=Image.FromStream(stream))return new Bitmap(image);}

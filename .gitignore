@@ -21,7 +21,13 @@
 .env
 .env.*
 
-# Private production PNGs and generated development replacements
-/assets/logo.png
-/assets/favcon.png
+# Branding assets are tracked; generated outputs remain ignored
 
+
+
+
+# Local reference design packages
+/ui-kit/
+
+
+/precision-kit/

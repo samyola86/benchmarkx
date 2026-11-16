@@ -1,4 +1,4 @@
-# Third-party notices
+﻿# Third-party notices
 
 Executable dependencies and downloaded source archives are not tracked in this source repository. Packaging retains upstream notices and corresponding source archives; see [BUILDING.md](docs/BUILDING.md).
 

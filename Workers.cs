@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -180,6 +180,7 @@ namespace Overclock {
     case "delay-test":Thread.Sleep(15000);Write(output,"Delayed worker done");break;
     case "sensor-service":MonitorService.Run(output,int.Parse(args[3]));break;
     case "network":Write(output,NetworkSample.Read());break;
+    case "identity":Write(output,PS("$cpu=Get-CimInstance Win32_Processor | Select-Object -First 1; @{CpuVendor=[string]$cpu.Manufacturer;Gpus=@(Get-CimInstance Win32_VideoController | ForEach-Object {@{Name=[string]$_.Name;PnpId=[string]$_.PNPDeviceID}})} | ConvertTo-Json -Depth 5 -Compress",12));break;
     case "capacity":Write(output,Capacity());break;
     case "mapping":Write(output,Volume(int.Parse(args[3]),128,args[4]));break;
     case "health-disk":Write(output,Run(Resolve("smartctl"),"-x /dev/pd"+int.Parse(args[3]),20,null,true));break;

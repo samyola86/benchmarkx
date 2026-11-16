@@ -1,7 +1,7 @@
 [Setup]
 AppId={code:InstallIdentity}
 AppName=BenchMark X
-AppVersion=1.6.1
+AppVersion=1.7.0
 AppPublisher=BenchMark X
 DefaultDirName={autopf}\BenchMarkX
 UsePreviousAppDir=no
@@ -14,7 +14,7 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0.22000
 OutputDir=artifacts
-OutputBaseFilename=BenchMark-X-1.6.1-Windows-x64-Setup
+OutputBaseFilename=BenchMark-X-1.7.0-Precision-Windows-x64-Setup
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern

@@ -8,7 +8,7 @@
 
 ## Branding files
 
-The original production PNG branding is private. Supply the original `assets/logo.png` and `assets/favcon.png` locally before building. These are embedded resources required by the unchanged build script. See [assets/README.md](../assets/README.md).
+The required logo, symbol, icon and ten hardware illustrations are tracked under `assets/`. The build embeds these resources in the executable, so no artwork download is needed. See [assets/README.md](../assets/README.md).
 
 ## Restore runtime dependencies
 

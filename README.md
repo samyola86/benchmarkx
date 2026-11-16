@@ -1,14 +1,17 @@
 <div align="center">
+  <img src="assets/logo.png" alt="BenchMark X" width="520" />
 
   <h1>BenchMark X</h1>
   <p><strong>Your hardware. Your performance. In focus.</strong></p>
   <p>A native Windows hardware dashboard, storage benchmark and GPU stress utility.</p>
-  <p><img src="https://img.shields.io/badge/version-1.6.1-b83240" alt="Version 1.6.1" /> <img src="https://img.shields.io/badge/platform-Windows%2011%20x64-202024" alt="Windows 11 x64" /> <img src="https://img.shields.io/badge/runtime-.NET%20Framework%204.8-202024" alt=".NET Framework 4.8" /></p>
+  <p><img src="https://img.shields.io/badge/version-1.7.0-b83240" alt="Version 1.7.0" /> <img src="https://img.shields.io/badge/platform-Windows%2011%20x64-202024" alt="Windows 11 x64" /> <img src="https://img.shields.io/badge/runtime-.NET%20Framework%204.8-202024" alt=".NET Framework 4.8" /></p>
 </div>
 
 
 
-BenchMark X brings live hardware telemetry, clear storage results and an independent OpenGL stress workload into a black-and-charcoal interface with subtle red accents. It runs as a native C# Windows Forms application, with no browser or Python runtime.
+BenchMark X brings live hardware telemetry, clear storage results and an independent OpenGL stress workload into a graphite interface with angular metallic cards, red headers, vendor-aware hardware artwork and filled live charts. It runs as a native C# Windows Forms application, with no browser or Python runtime.
+
+The Precision redesign adds shared dark scrolling, a three-pane Sensors workspace, hardware identity banners and consistent racing-inspired panels across every route. Application version 1.7.0 and existing data formats are retained. See [redesign notes](docs/PRECISION-REDESIGN.md).
 
 ## Features
 
@@ -27,9 +30,9 @@ BenchMark X brings live hardware telemetry, clear storage results and an indepen
 
 **Requirements:** Windows 11 x64, .NET Framework 4.8, and administrator permission for low-level hardware access. GPU stress currently requires exactly one NVIDIA GPU with working NVIDIA SMI temperature telemetry. Monitoring support varies by hardware and driver.
 
-For a packaged build, run `BenchMark-X-1.6.1-Windows-x64-Setup.exe`. Setup installs the app into Program Files and automatically provisions the bundled, signed PawnIO driver. There is no separate driver checkbox or download. Windows displays its normal administrator prompt; a restart may be required by the driver.
+For a packaged build, run `BenchMark-X-1.7.0-Precision-Windows-x64-Setup.exe`. Setup installs the app into Program Files and automatically provisions the bundled, signed PawnIO driver. There is no separate driver checkbox or download. Windows displays its normal administrator prompt; a restart may be required by the driver.
 
-This repository contains the source and application icon. The original production PNG branding remains private; building requires supplying those images locally. Generated installers and downloaded third-party binaries are excluded. See [Building from source](docs/BUILDING.md) to prepare a development checkout. There is no installer download attached to this initial source commit.
+This repository includes the application source, logo, icon and hardware artwork. Download the Windows installer from [Releases](https://github.com/samyola86/benchmarkx/releases). Downloaded third-party dependencies and generated development files are excluded from the source tree. See [Building from source](docs/BUILDING.md) for the dependency and packaging steps.
 
 ## Storage results you can share
 
@@ -69,7 +72,7 @@ Existing settings and history remain in `%LOCALAPPDATA%\OverclockNative` for com
 
 ## Project status
 
-Version **1.6.1** is a development build. Build, interface navigation, safe functional checks, and installer/uninstaller validation have been performed locally. This is not a claim that every hardware configuration, workload mode or failure path has been validated. Application and installer binaries are currently unsigned; the bundled upstream PawnIO installer is signed.
+Version **1.7.0** is a development build. Build, interface navigation, safe functional checks, and installer/uninstaller validation have been performed locally. This is not a claim that every hardware configuration, workload mode or failure path has been validated. Application and installer binaries are currently unsigned; the bundled upstream PawnIO installer is signed.
 
 For behavior and usage details, see the [user guide](docs/USAGE.md). To report a problem, [open an issue](https://github.com/samyola86/benchmarkx/issues) with the app version, Windows version, hardware model, reproduction steps and relevant logs. Review logs for serial numbers or other personal information before sharing them.
 

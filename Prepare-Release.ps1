@@ -20,7 +20,7 @@ Copy-Item -LiteralPath $pawnInstaller -Destination "$release\dependencies\PawnIO
 Get-ChildItem -LiteralPath $release -Recurse -File | Where-Object Name -ne 'SHA256.json' | ForEach-Object { [pscustomobject]@{ Path=$_.FullName.Substring($release.Length+1); SHA256=(Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash } } | ConvertTo-Json | Set-Content "$release\SHA256.json" -Encoding UTF8
 & tools\inno\ISCC.exe Installer.iss
 if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
-Get-FileHash artifacts\BenchMark-X-1.6.1-Windows-x64-Setup.exe -Algorithm SHA256
+Get-FileHash artifacts\BenchMark-X-1.7.0-Precision-Windows-x64-Setup.exe -Algorithm SHA256
 
 
 
