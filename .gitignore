@@ -1,6 +1,27 @@
-# Generated and machine-local files
+# Generated builds and downloaded dependencies
 /dist/
 /artifacts/
 /release/
 /release-benchmarkx/
 /tests/
+/tools/*
+!/tools/BuildBrandIcon.cs
+!/tools/*-LICENSE.txt
+
+# Developer and machine-local files
+.vs/
+.vscode/
+.agents/
+.codex/
+.aws/
+*.user
+*.suo
+*.log
+*.tmp
+.env
+.env.*
+
+# Private production PNGs and generated development replacements
+/assets/logo.png
+/assets/favcon.png
+
