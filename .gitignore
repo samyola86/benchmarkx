@@ -1,0 +1,6 @@
+# Generated and machine-local files
+/dist/
+/artifacts/
+/release/
+/release-benchmarkx/
+/tests/
