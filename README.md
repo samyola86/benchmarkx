@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
   <img src="assets/logo.png" alt="BenchMark X" width="520" />
 
   <h1>BenchMark X</h1>
@@ -24,6 +24,8 @@ The Precision redesign adds shared dark scrolling, a three-pane Sensors workspac
 | S.M.A.R.T. health | Available ATA/NVMe health, temperature, endurance, error counters and raw smartctl reports |
 | GPU stress | 720p through 4K, windowed/fullscreen rendering, live telemetry overlay and an **Until stopped** duration |
 | Reports | Saved runs, comparable-workload graphs, and CSV/JSON/text exports |
+| RGB Studio | Optional loopback OpenRGB SDK integration, capability-driven controls, explicit Apply/Restore and local presets |
+| Display Studio | Read-only Windows discovery, supported DDC/CI/WMI controls and explicit current-user SDR ICC associations |
 | Compact monitor | Always-on-top CPU/GPU/RAM view and system-tray controls |
 
 ## Getting started
@@ -39,6 +41,8 @@ This repository includes the application source, logo, icon and hardware artwork
 Choose a physical drive and workload preset, review the test settings, then run all tests or an individual measurement. Results report **MB/s**, with **IOPS** and average latency available on demand. Use **Save PNG** or **Copy image** for a branded scorecard, or share a saved run from Reports.
 
 Storage tests use newly created temporary files on a validated mounted volume. They do not write directly to raw disks. Tests still generate real I/O and writes; review capacity, duration and repetitions before starting. A forced termination can leave that run's uniquely named temporary folder.
+
+See [Hardware Studios](docs/HARDWARE-STUDIOS.md) for opt-in control, provider requirements, profiles and recovery, and [studio validation](docs/STUDIO-VALIDATION.md) for remaining hardware/DPI release gates.
 
 ## Hardware health and stress testing
 

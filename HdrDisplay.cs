@@ -1,0 +1,21 @@
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+namespace Overclock {
+ // CCD target IDs are resolved from the monitor interface path on every operation.
+ // Modern HDR-specific APIs avoid mistaking SDR wide-colour support for HDR.
+ static class HdrDisplay {
+  [DllImport("user32.dll")]static extern int GetDisplayConfigBufferSizes(uint flags,out uint paths,out uint modes);
+  [DllImport("user32.dll")]static extern int QueryDisplayConfig(uint flags,ref uint paths,IntPtr pathData,ref uint modes,IntPtr modeData,IntPtr topology);
+  [DllImport("user32.dll")]static extern int DisplayConfigGetDeviceInfo(IntPtr request);
+  [DllImport("user32.dll")]static extern int DisplayConfigSetDeviceInfo(IntPtr request);
+  struct Target {public int Low,High;public uint Id;}
+  static string Key(string id){return (id??"").Replace("\\\\?\\","").Split('{')[0].TrimEnd('#').Replace('#','\\').ToUpperInvariant();}
+  static IntPtr Request(int type,int size,Target target){IntPtr p=Marshal.AllocHGlobal(size);for(int i=0;i<size;i++)Marshal.WriteByte(p,i,0);Marshal.WriteInt32(p,0,type);Marshal.WriteInt32(p,4,size);Marshal.WriteInt32(p,8,target.Low);Marshal.WriteInt32(p,12,target.High);Marshal.WriteInt32(p,16,(int)target.Id);return p;}
+  static Target Resolve(string id){for(int attempt=0;attempt<3;attempt++){uint paths,modes;int error=GetDisplayConfigBufferSizes(2,out paths,out modes);if(error!=0)throw new Win32Exception(error);if(paths==0||paths>128||modes>512)throw new InvalidOperationException("Invalid display topology");IntPtr pp=Marshal.AllocHGlobal(checked((int)paths*72)),mm=Marshal.AllocHGlobal(checked((int)Math.Max(1,modes)*64));try{error=QueryDisplayConfig(2,ref paths,pp,ref modes,mm,IntPtr.Zero);if(error==122)continue;if(error!=0)throw new Win32Exception(error);Target? found=null;for(int i=0;i<paths;i++){IntPtr row=IntPtr.Add(pp,i*72);var target=new Target{Low=Marshal.ReadInt32(row,20),High=Marshal.ReadInt32(row,24),Id=(uint)Marshal.ReadInt32(row,28)};IntPtr name=Request(2,420,target);try{if(DisplayConfigGetDeviceInfo(name)==0&&Key(Marshal.PtrToStringUni(IntPtr.Add(name,164),128).TrimEnd('\0'))==Key(id)){if(found.HasValue&&(found.Value.Low!=target.Low||found.Value.High!=target.High||found.Value.Id!=target.Id))throw new InvalidOperationException("Ambiguous HDR display mapping");found=target;}}finally{Marshal.FreeHGlobal(name);}}if(!found.HasValue)throw new InvalidOperationException("Display target disconnected");return found.Value;}finally{Marshal.FreeHGlobal(pp);Marshal.FreeHGlobal(mm);}}throw new InvalidOperationException("Display topology changed repeatedly. Refresh.");}
+  internal static void Decode(StudioDevice d,uint flags,int activeMode){d.HdrSupported=(flags&16)!=0;d.HdrEnabled=(flags&32)!=0;d.HdrActive=activeMode==2;d.HdrCanToggle=d.HdrSupported&&(flags&8)==0;d.HdrStatus=!d.HdrSupported?"HDR not supported":(flags&8)!=0?"HDR restricted by Windows policy":d.HdrEnabled==true?(d.HdrActive?"HDR enabled":"HDR enabled; currently inactive"):"HDR disabled";}
+  static void Read(StudioDevice d,Target target){IntPtr p=Request(15,36,target);try{int result=DisplayConfigGetDeviceInfo(p);if(result==0){Decode(d,(uint)Marshal.ReadInt32(p,20),Marshal.ReadInt32(p,32));return;}}finally{Marshal.FreeHGlobal(p);}p=Request(9,32,target);try{int result=DisplayConfigGetDeviceInfo(p);d.HdrSupported=false;d.HdrCanToggle=false;d.HdrEnabled=null;d.HdrActive=false;d.HdrStatus=result==0&&(Marshal.ReadInt32(p,20)&1)==0?"HDR not supported":"HDR capability unavailable; HDR-specific Windows API required";}finally{Marshal.FreeHGlobal(p);}}
+  public static void Read(StudioDevice d){try{Read(d,Resolve(d.Id));}catch(Exception error){d.HdrCanToggle=false;d.HdrSupported=false;d.HdrEnabled=null;d.HdrStatus="HDR unavailable: "+error.Message;}}
+  public static void Set(StudioDevice d,bool enabled){var target=Resolve(d.Id);Read(d,target);if(!d.HdrCanToggle||!d.HdrEnabled.HasValue)throw new InvalidOperationException(d.HdrStatus);IntPtr p=Request(16,24,target);try{Marshal.WriteInt32(p,20,enabled?1:0);int result=DisplayConfigSetDeviceInfo(p);if(result!=0)throw new Win32Exception(result);}finally{Marshal.FreeHGlobal(p);}Read(d,target);if(d.HdrEnabled!=enabled)throw new InvalidOperationException("Windows did not confirm the requested HDR state. Refresh to read current state.");}
+ }
+}

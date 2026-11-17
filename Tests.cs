@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Diagnostics;
 using System.IO;
@@ -24,6 +24,7 @@ namespace Overclock {
     foreach(int dpi in new[]{96,120,144}){float factor=dpi/96f;using(var image=new Bitmap((int)(414*factor),(int)(390*factor))){image.SetResolution(dpi,dpi);using(var card=new MetricCard{Width=image.Width,Height=image.Height,ArtKey="cpu-amd"}){card.Set("CPU","42%","UTILIZATION","ISOLATED CPU FIXTURE — NOT LIVE","Fixture values only","Fixture history",58,"58°",new float[]{20,42,30,42});using(var g=Graphics.FromImage(image))typeof(MetricCard).GetMethod("OnPaint",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(card,new object[]{new System.Windows.Forms.PaintEventArgs(g,new Rectangle(Point.Empty,image.Size))});image.Save(Path.Combine(folder,"precision-card-"+dpi+"dpi-fixture.png"));}}}
     log.AppendLine("PASS custom card renderer at 96/120/144 DPI (isolated fixtures, not full-window monitor DPI transitions)");
     log.AppendLine(ScrollTests.Run(folder));
+    log.AppendLine(StudioTests.Run(folder));
     Assert(Branding.Name=="BenchMark X"&&Branding.Icon.Width>=16&&Branding.LogoBounds.Width>0,"Brand assets failed to load");
     var fixture=ReportStore.Create("diskbench","fixture only","fixture only","Physical disk: Disk #9 | Unit test drive | PRIVATE-SERIAL | 128 GiB | NVMe | Healthy\r\nMounted volume: X:\\ | 128 MiB\r\nProfile: 0 | seconds: 1 | repetitions: 1\r\nSEQ1M Q8T1 READ   123.45 MB/s | 118 IOPS | 12.3 us\r\nCompleted.","Completed");
     var scoreData=DiskScoreData.FromRecord(fixture);Assert(scoreData.Rows.Count==1&&scoreData.Rows[0].Read==123.45&&!scoreData.Rows[0].Write.HasValue,"Scorecard parsing or missing-value handling failed");Assert(!scoreData.Drive.Contains("PRIVATE-SERIAL"),"Serial leaked into shareable title");Assert(scoreData.Utc==fixture.Utc&&scoreData.Settings.Contains("128 MiB"),"Share metadata not preserved");

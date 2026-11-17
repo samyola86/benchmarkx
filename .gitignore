@@ -31,3 +31,7 @@
 
 
 /precision-kit/
+
+/tmp/
+
+!/tools/CompactHeaderCheck.cs

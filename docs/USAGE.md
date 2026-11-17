@@ -1,4 +1,4 @@
-# BenchMark X 1.6.1 — Windows 11 x64
+﻿# BenchMark X 1.6.1 — Windows 11 x64
 
 Run `artifacts\BenchMark-X-1.6.1-Windows-x64-Setup.exe` to install, or launch `dist\BenchMarkX.exe` from this workspace. The application is native C# / Windows Forms and uses .NET Framework 4.8 included with Windows 11. No Python, browser, PATH configuration or user compilation is needed. `Build-Windows.cmd` rebuilds the developer source using the Windows Framework compiler.
 
@@ -18,7 +18,7 @@ The black and charcoal dashboard uses large live metrics, temperature rings and 
 
 ## Monitoring
 
-Overview provides CPU, GPU, memory, storage, network and sensor cards with CPU/GPU history. CPU/GPU/Memory/Storage pages provide detail. Sensors has a hardware tree, current/minimum/maximum values, selected-sensor history and reset. Settings persists the 1–10 second sensor interval and always-on-top preference. Mini monitor is an always-on-top compact CPU/GPU/RAM view; click its heading to expand.
+Overview provides CPU, GPU, memory, storage, network and sensor cards with CPU/GPU history. CPU/GPU/Memory/Storage pages provide detail. Sensors has a hardware tree, current/minimum/maximum values, selected-sensor history and reset. Settings persists the 1–10 second sensor interval and always-on-top preference. Mini monitor is an always-on-top CPU/GPU/RAM view with a display selector, live brightness, contrast/colour controls and a capability-gated HDR checkbox; click its heading to expand.
 
 LibreHardwareMonitor runs inside a dedicated, supervised collector process. The standalone LibreHardwareMonitor application is unnecessary. Certain low-level CPU, motherboard, voltage and fan sensors require the signed PawnIO driver and elevated hardware access. The installer automatically provisions the bundled signed PawnIO driver and verifies hardware access before completing. There is no separate driver checkbox or download. Windows UAC requests administrator permission for setup and app startup. Setup installs the app into Program Files; a driver-requested restart is reported before app launch. Missing or unsupported readings remain unavailable. The app does not change Windows security settings. Providers that stall are terminated and retried without blocking navigation.
 

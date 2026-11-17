@@ -171,6 +171,8 @@ namespace Overclock {
   }
   public static void Execute(string kind,string output,string[] args){
    switch(kind){
+    case "rgb-inspect":using(var studio=new OpenRgbStudio(6742)){Write(output,StudioJson.Serialize(studio.Execute(new StudioCommand(),CancellationToken.None).GetAwaiter().GetResult()));}break;
+    case "studio-inspect":using(var studio=new DisplayStudioClient()){var profiles=studio.Execute(new StudioCommand{Action="profiles"},CancellationToken.None).GetAwaiter().GetResult();var displays=studio.Execute(new StudioCommand(),CancellationToken.None).GetAwaiter().GetResult();if(profiles.Error!=null||displays.Error!=null)throw new IOException(profiles.Error??displays.Error);Write(output,StudioJson.Serialize(new{DisplayDiscovery=displays,InstalledProfiles=profiles.Profiles}));}break;
     case "test-suite":Write(output,Tests.Run(args[3]));break;
     case "selftest":
      var rows=Profile(0);if(rows.Length!=4||rows[2].Q!=32||!rows[2].Random)throw new Exception("Profile test failed");
